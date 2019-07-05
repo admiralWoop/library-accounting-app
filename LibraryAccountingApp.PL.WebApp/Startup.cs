@@ -13,6 +13,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Npgsql.EntityFrameworkCore.PostgreSQL;
 
+using Microsoft.AspNetCore.Identity;
+using LibraryAccountingApp.Entities;
+
 namespace LibraryAccountingApp.PL.WebApp
 {
     public class Startup
@@ -39,6 +42,10 @@ namespace LibraryAccountingApp.PL.WebApp
                 
             services.AddDbContext<LibraryContext>(options => options.UseInMemoryDatabase("libraryDB"));
             //services.AddDbContext<LibraryContext>(options => options.UseNpgsql(@""));
+
+            services.AddIdentity<User, IdentityRole>()
+                .AddEntityFrameworkStores<LibraryContext>();
+                //.AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -57,6 +64,7 @@ namespace LibraryAccountingApp.PL.WebApp
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
             app.UseCookiePolicy();
 
             app.UseMvc();
