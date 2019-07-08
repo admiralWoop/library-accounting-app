@@ -5,11 +5,13 @@ VisualStudioVersion = 16.0.28803.452
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAccountingApp.PL.WebApp", "LibraryAccountingApp.PL.WebApp\LibraryAccountingApp.PL.WebApp.csproj", "{4B1C0840-D7B1-4977-9E3B-3585380277E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAccountingApp.Entities", "LibraryAccountingApp.Entities\LibraryAccountingApp.Entities.csproj", "{D7F3E997-4CB3-41EA-B862-2AAE7697198B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAccountingApp.Entities", "LibraryAccountingApp.Entities\LibraryAccountingApp.Entities.csproj", "{D7F3E997-4CB3-41EA-B862-2AAE7697198B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAccountingApp.DAL.Contracts", "LibraryAccountingApp.DAL.Contracts\LibraryAccountingApp.DAL.Contracts.csproj", "{E0E268CC-B02F-4C63-91B5-4BCE88124612}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAccountingApp.DAL.Contracts", "LibraryAccountingApp.DAL.Contracts\LibraryAccountingApp.DAL.Contracts.csproj", "{E0E268CC-B02F-4C63-91B5-4BCE88124612}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAccountingApp.DAL.EFCore", "LibraryAccountingApp.DAL.EFCore\LibraryAccountingApp.DAL.EFCore.csproj", "{3AA56209-8C70-4E36-9930-15CADFE4944D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryAccountingApp.DAL.EFCore", "LibraryAccountingApp.DAL.EFCore\LibraryAccountingApp.DAL.EFCore.csproj", "{3AA56209-8C70-4E36-9930-15CADFE4944D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryAccountingApp.BLL.Core", "LibraryAccountingApp.BLL.Core\LibraryAccountingApp.BLL.Core.csproj", "{4C27A7F5-68F5-4BDB-AEE7-6B6AB699E3FE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{3AA56209-8C70-4E36-9930-15CADFE4944D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3AA56209-8C70-4E36-9930-15CADFE4944D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3AA56209-8C70-4E36-9930-15CADFE4944D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C27A7F5-68F5-4BDB-AEE7-6B6AB699E3FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C27A7F5-68F5-4BDB-AEE7-6B6AB699E3FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C27A7F5-68F5-4BDB-AEE7-6B6AB699E3FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C27A7F5-68F5-4BDB-AEE7-6B6AB699E3FE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
