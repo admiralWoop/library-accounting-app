@@ -33,6 +33,11 @@ namespace LibraryAccountingApp.DAL.EFCore
             return _context.Books.Where(predicate).ToList();
         }
 
+        public bool Any(Func<Book, Boolean> predicate)
+        {
+            return _context.Books.Any(predicate);
+        }
+
         public Book Get(long id)
         {
             return _context.Books.Find(id);
