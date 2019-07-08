@@ -35,6 +35,11 @@ namespace LibraryAccountingApp.DAL.EFCore
             return _context.Genres.Where(predicate).ToList();
         }
 
+        public bool Any(Func<Genre, Boolean> predicate)
+        {
+            return _context.Genres.Any(predicate);
+        }
+
         public Genre Get(long id)
         {
             return _context.Genres.Find(id);
