@@ -6,8 +6,5 @@ using System.Threading.Tasks;
 
 namespace LibraryAccountingApp.Entities
 {
-    public class User : IdentityUser
-    {
-        public UserRank Rank { get; set; }
-    }
+    public class User : IdentityUser { }
 }
