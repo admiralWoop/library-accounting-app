@@ -15,6 +15,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 using Microsoft.AspNetCore.Identity;
 using LibraryAccountingApp.Entities;
+using LibraryAccountingApp.BLL.Core;
+using LibraryAccountingApp.DAL.Contracts;
 
 namespace LibraryAccountingApp.PL.WebApp
 {
@@ -42,6 +44,10 @@ namespace LibraryAccountingApp.PL.WebApp
                 
             services.AddDbContext<LibraryContext>(options => options.UseInMemoryDatabase("libraryDB"));
             //services.AddDbContext<LibraryContext>(options => options.UseNpgsql(@""));
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddTransient<BookService>();
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<LibraryContext>();
