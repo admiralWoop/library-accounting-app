@@ -5,12 +5,13 @@
 }
 
 @using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Hosting
 @using LibraryAccountingApp.Entities
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@inject IHostingEnvironment Env;
 
-@*@if (SignInManager.IsSignedIn(User))*@
-@if (true)
+@if (Env.IsDevelopment() || SignInManager.IsSignedIn(User))
 {
     Response.Redirect("/Books");
 }
