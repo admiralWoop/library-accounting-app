@@ -1,0 +1,45 @@
+﻿@using LibraryAccountingApp.Entities;
+@model Book
+@{
+    ViewData["Title"] = "Book";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+    
+<div class="d-flex flex-row">
+    <h4 class="col">Book</h4>
+    <div>
+        <a class="btn btn-danger col">
+            Delete
+        </a>
+    </div>
+</div>
+<div>
+    <table class="table table-bordered table-condensed">
+        <tbody>
+            <tr>
+                <td><b>Id</b></td>
+                <td>@Html.DisplayFor(_ => Model.Id)</td>
+
+            </tr>
+            <tr>
+                <td><b>Title</b></td>
+                <td>@Html.DisplayFor(_ => Model.Title)</td>
+            </tr>
+            <tr>
+                <td><b>Genre</b></td>
+                <td>@Html.DisplayFor(_ => Model.Genre.Name)</td>
+            </tr>
+            <tr>
+                <td><b>Author</b></td>
+                <td>@Html.DisplayFor(_ => Model.AuthorName)</td>
+            </tr>
+            <tr>
+                <td><b>Description</b></td>
+                <td>@Html.DisplayFor(_ => Model.Description)</td>
+            </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-danger">
+        Delete
+    </a>
+</div>

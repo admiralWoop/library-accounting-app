@@ -1,0 +1,15 @@
+﻿@*@using LibraryAccountingApp.Entities;
+@model GenreModel
+@{
+    ViewData["Title"] = "Genre";
+}
+
+<div>
+    @Html.DisplayFor(_ => Model.Name);
+    <ul>
+        @foreach (var item in Model.Subgenres)
+        {
+            <li><partial name="_Genre" model="@item"/></li>
+        }
+    </ul>
+</div>*@
