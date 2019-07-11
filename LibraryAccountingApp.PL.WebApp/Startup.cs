@@ -48,6 +48,7 @@ namespace LibraryAccountingApp.PL.WebApp
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddTransient<BookService>();
+            services.AddTransient<GenreService>();
 
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<LibraryContext>();
@@ -63,7 +64,7 @@ namespace LibraryAccountingApp.PL.WebApp
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -73,7 +74,10 @@ namespace LibraryAccountingApp.PL.WebApp
             app.UseAuthentication();
             app.UseCookiePolicy();
 
-            app.UseMvc();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
