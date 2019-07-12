@@ -18,6 +18,9 @@ namespace LibraryAccountingApp.BLL.Core
 
         public Genre GetById(long id) => _uof.Genres.Get(id);
 
+        public Genre GetByName(string name) => 
+            _uof.Genres.Find(_ => _.Name == name).FirstOrDefault();
+
         public List<Genre> GetAll() => _uof.Genres.GetAll().ToList();
 
         public void AddGenre(Genre genre)
