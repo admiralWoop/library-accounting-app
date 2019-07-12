@@ -42,8 +42,8 @@ namespace LibraryAccountingApp.PL.WebApp
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
                 
-            services.AddDbContext<LibraryContext>(options => options.UseInMemoryDatabase("libraryDB"));
-            //services.AddDbContext<LibraryContext>(options => options.UseNpgsql(@""));
+            //services.AddDbContext<LibraryContext>(options => options.UseInMemoryDatabase("libraryDB"));
+            services.AddDbContext<LibraryContext>(options => options.UseNpgsql(Configuration.GetConnectionString("LibraryConnection")));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
 
