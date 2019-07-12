@@ -1,0 +1,45 @@
+﻿@using LibraryAccountingApp.PL.WebApp.Models;
+@model BookViewModel
+    
+<div class="row">
+    <div class="col-3 d-flex justify-content-end align-items-start">
+        <a class="btn btn-primary mb-2 text-white" asp-area="" asp-controller="Home" asp-action="Index">
+            Back
+        </a>
+    </div>
+    <div class="col-6">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <h4 class="">Book</h4>
+            <div>
+                <a class="btn btn-info mb-2 text-white">
+                    Edit
+                </a>
+                <a class="btn btn-danger mb-2 text-white">
+                    Delete
+                </a>
+            </div>
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><b>Title</b></td>
+                        <td>@Html.DisplayFor(_ => Model.Title)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Genre</b></td>
+                        <td>@Html.DisplayFor(_ => Model.GenreName)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Author</b></td>
+                        <td>@Html.DisplayFor(_ => Model.AuthorName)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Description</b></td>
+                        <td>@Html.DisplayFor(_ => Model.Description)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
