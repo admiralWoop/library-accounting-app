@@ -9,6 +9,12 @@ namespace LibraryAccountingApp.Entities
     {
         public long Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Genre> Subgenres { get; set; }
+        public virtual ICollection<Genre> Subgenres { get; set; }
+        public virtual Genre Parent { get; set; }
+
+        public Genre()
+        {
+            Subgenres = new List<Genre>();
+        }
     }
 }

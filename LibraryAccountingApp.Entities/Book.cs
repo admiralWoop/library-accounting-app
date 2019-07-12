@@ -11,6 +11,6 @@ namespace LibraryAccountingApp.Entities
         public string Title { get; set; }
         public string AuthorName { get; set; }
         public string Description { get; set; }
-        public Genre Genre { get; set; }
+        public virtual Genre Genre { get; set; }
     }
 }
