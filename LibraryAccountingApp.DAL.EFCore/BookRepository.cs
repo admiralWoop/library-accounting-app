@@ -40,7 +40,17 @@ namespace LibraryAccountingApp.DAL.EFCore
 
         public Book Get(long id)
         {
-            return _context.Books.Find(id);
+            return _context.Books
+                .Where(_ => _.Id == id)
+                .Select(_ => new Book()
+                {
+                    Id = _.Id,
+                    Title = _.Title,
+                    AuthorName = _.AuthorName,
+                    Description = _.Description,
+                    Genre = _.Genre
+                })
+                .FirstOrDefault();
         }
 
         public IEnumerable<Book> GetAll()
