@@ -17,5 +17,19 @@ namespace LibraryAccountingApp.DAL.EFCore
         }
         public DbSet<Book> Books { get; set; }
         public DbSet<Genre> Genres { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Book>().ToTable("Book");
+
+            modelBuilder.Entity<Genre>().ToTable("Genre");
+            modelBuilder.Entity<Genre>(entity =>
+            {
+                entity.HasMany(genre => genre.Subgenres)
+               .WithOne(genre => genre.Parent);
+            });
+
+            base.OnModelCreating(modelBuilder);
+        }
     }
 }
