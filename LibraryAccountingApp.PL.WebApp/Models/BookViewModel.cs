@@ -11,6 +11,8 @@ namespace LibraryAccountingApp.PL.WebApp.Models
 {
     public class BookViewModel
     {
+        [HiddenInput]
+        public long Id { get; set; }
 
         [DisplayName("Title")]
         [Required(ErrorMessage = "Enter the title")]
