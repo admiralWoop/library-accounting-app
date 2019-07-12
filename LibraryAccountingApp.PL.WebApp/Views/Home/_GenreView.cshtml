@@ -5,7 +5,10 @@
 }
 
 
-    @Html.DisplayFor(_ => Model.Name)
+    <a class=""
+       asp-area="" asp-controller="Home" asp-action="OpenGenre" asp-route-id="@Model.Id">
+        @Model.Name
+    </a>
     @if (Model.Subgenres.Count() > 0)
     {
     <ul>

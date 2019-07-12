@@ -1,0 +1,44 @@
+﻿@using LibraryAccountingApp.PL.WebApp.Models;
+@model GenreViewModel
+    <div class="row">
+        <div class="col-3 d-flex justify-content-end align-items-start">
+            <a class="btn btn-primary mb-2 text-white" asp-area="" asp-controller="Home" asp-action="Index">
+                Back
+            </a>
+        </div>
+        <div class="col-6">
+            <div class="d-flex flex-row justify-content-between align-items-center">
+                <h4 class="">Genre</h4>
+                <div>
+                    <a class="btn btn-info mb-2 text-white">
+                        Edit
+                    </a>
+                    <a class="btn btn-danger mb-2 text-white">
+                        Delete
+                    </a>
+                </div>
+            </div>
+            <div>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td><b>Title</b></td>
+                            <td>@Html.DisplayFor(_ => Model.Name)</td>
+                        </tr>
+                        <tr>
+                            <td><b>Subgenres</b></td>
+                            <td class="d-inline">
+                                @foreach (var item in Model.Subgenres)
+                                {
+                                    <a class=""
+                                       asp-area="" asp-controller="Home" asp-action="OpenGenre" asp-route-id="@item.Id">
+                                        @item.Name
+                                    </a>
+                                }
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
