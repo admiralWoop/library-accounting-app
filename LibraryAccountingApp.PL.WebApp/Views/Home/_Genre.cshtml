@@ -14,7 +14,7 @@
     <ul>
         @foreach (var item in Model.Subgenres)
         {
-            <li><partial name="_GenreView" model="@(new GenreViewModel() { Name = item.Name, Subgenres = item.Subgenres })"/></li>
+            <li><partial name="_Genre" model="@(new GenreViewModel() { Name = item.Name, Subgenres = item.Subgenres })"/></li>
         }
     </ul>
     }

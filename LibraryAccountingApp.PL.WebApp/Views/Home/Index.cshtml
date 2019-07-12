@@ -9,7 +9,7 @@
         <div class="border rounded p-3 mb-3">
             @foreach (var item in ViewBag.Genres)
             {
-                <partial name="_GenreView" model="@item" />
+                <partial name="_Genre" model="@item" />
             }
         </div>
     </div>
@@ -20,6 +20,6 @@
                 Add new book
             </a>
         </div>
-        <partial name="_BooksTableView" model="@ViewBag.Books"/>
+        <partial name="_BooksTable" model="@ViewBag.Books"/>
     </div>
 </div>

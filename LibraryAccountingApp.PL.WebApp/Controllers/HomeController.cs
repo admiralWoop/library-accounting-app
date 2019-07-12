@@ -76,7 +76,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
                 GenreName = book.Genre?.Name
             };
 
-            return View("BookView", bookVM);
+            return View("Book", bookVM);
         }
 
 
