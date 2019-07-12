@@ -1,69 +1,25 @@
-﻿@*@model IndexModel
-    @{
-        ViewData["Title"] = "Home page";
-    }
-
-    @using Microsoft.AspNetCore.Identity
-    @using Microsoft.AspNetCore.Hosting
-    @using LibraryAccountingApp.Entities
-    @inject SignInManager<User> SignInManager
-    @inject UserManager<User> UserManager
-    @inject IHostingEnvironment Env;
-
-    @if (Env.IsDevelopment() || SignInManager.IsSignedIn(User))
-    {
-        Response.Redirect("/Books");
-    }
-    else
-    {
-        Response.Redirect("/Identity/Account/Login");
-    }*@
-@using LibraryAccountingApp.PL.WebApp.Models;
-@model IEnumerable<BookViewModel>
-
-<div class="top-buffer"></div>
-<div class="container">
+﻿<div class="row">
     <div class="col-3">
-        @*@foreach (var item in Model)
-        {
-            <partial name="_Genre" model="@item" />
-        }*@
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <h4 class="">Genres</h4>
+            <a class="btn btn-primary mb-2 text-white">
+                Add new genre
+            </a>
+        </div>
+        <div class="border rounded p-3 mb-3">
+            @foreach (var item in ViewBag.Genres)
+            {
+                <partial name="_GenreView" model="@item" />
+            }
+        </div>
     </div>
     <div class="col-9">
-        <div class="row">
-            <h4>Books</h4>
-            <a class="btn btn-primary">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <h4 class="">Books</h4>
+            <a class="btn btn-primary mb-2 text-white">
                 Add new book
             </a>
         </div>
-        <div class="top-buffer"></div>
-        <table class="table table-bordered table-striped table-condensed table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">Title</th>
-                    <th scope="col">Genre</th>
-                    <th scope="col">Author</th>
-                    <th scope="col">Description</th>
-                    <th scope="col"></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td scope="row">@Html.DisplayFor(modelItem => item.Title)</td>
-                        <td scope="row">@Html.DisplayFor(modelItem => item.GenreName)</td>
-                        <td scope="row">@Html.DisplayFor(modelItem => item.AuthorName)</td>
-                        <td scope="row">@Html.DisplayFor(modelItem => item.Description)</td>
-                        <td scope="row" style="white-space:nowrap; width:1%;">
-                            <a class="btn btn-outline-info"
-                               style="position:center">
-                                Info
-                            </a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+        <partial name="_BooksTableView" model="@ViewBag.Books"/>
     </div>
 </div>

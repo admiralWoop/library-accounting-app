@@ -1,0 +1,17 @@
+﻿@using LibraryAccountingApp.PL.WebApp.Models;
+@model GenreViewModel
+@{
+    ViewData["Title"] = "Genre";
+}
+
+
+    @Html.DisplayFor(_ => Model.Name)
+    @if (Model.Subgenres.Count() > 0)
+    {
+    <ul>
+        @foreach (var item in Model.Subgenres)
+        {
+            <li><partial name="_GenreView" model="@(new GenreViewModel() { Name = item.Name, Subgenres = item.Subgenres })"/></li>
+        }
+    </ul>
+    }

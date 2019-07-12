@@ -1,0 +1,31 @@
+﻿@using LibraryAccountingApp.PL.WebApp.Models;
+@model IEnumerable<BookViewModel>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Genre</th>
+            <th scope="col">Author</th>
+            <th scope="col">Description</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td scope="row">@Html.DisplayFor(modelItem => item.Title)</td>
+                <td scope="row">@Html.DisplayFor(modelItem => item.GenreName)</td>
+                <td scope="row">@Html.DisplayFor(modelItem => item.AuthorName)</td>
+                <td scope="row">@Html.DisplayFor(modelItem => item.Description)</td>
+                <td scope="row" style="white-space:nowrap; width:1%;">
+                    <a class="btn btn-outline-info" style="position:center"
+                       asp-area="" asp-controller="Home" asp-action="OpenBook" asp-route-id="@item.Id">
+                        Info
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
