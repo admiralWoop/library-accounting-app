@@ -42,7 +42,18 @@ namespace LibraryAccountingApp.DAL.EFCore
 
         public Genre Get(long id)
         {
-            return _context.Genres.Find(id);
+            var subgenres = GetAll().Where(g => g.Parent?.Id == id).ToList();
+
+            return _context.Genres
+                .Where(g => g.Id == id)
+                .Select(_ => new Genre()
+                {
+                    Id = _.Id,
+                    Name = _.Name,
+                    Parent = _.Parent,
+                    Subgenres = subgenres
+                })
+                .FirstOrDefault();
         }
 
         public IEnumerable<Genre> GetAll()
