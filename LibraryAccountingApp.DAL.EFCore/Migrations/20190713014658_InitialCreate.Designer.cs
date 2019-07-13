@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace LibraryAccountingApp.DAL.EFCore.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20190712135005_InitialCreate")]
+    [Migration("20190713014658_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

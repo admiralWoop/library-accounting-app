@@ -23,11 +23,11 @@ namespace LibraryAccountingApp.DAL.EFCore
             modelBuilder.Entity<Book>().ToTable("Book");
 
             modelBuilder.Entity<Genre>().ToTable("Genre");
-            modelBuilder.Entity<Genre>(entity =>
-            {
-                entity.HasMany(genre => genre.Subgenres)
-               .WithOne(genre => genre.Parent);
-            });
+            //modelBuilder.Entity<Genre>(entity =>
+            //{
+            //    entity.HasMany(genre => genre.Subgenres)
+            //   .WithOne(genre => genre.Parent);
+            //});
 
             base.OnModelCreating(modelBuilder);
         }
