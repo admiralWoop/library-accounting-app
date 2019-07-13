@@ -39,16 +39,22 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
                         Title = _.Title,
                         AuthorName = _.AuthorName,
                         Description = _.Description,
-                        GenreName = _.Genre.Name
+                        Genre = new GenreViewModel()
+                        {
+                            Id = _.Genre.Id,
+                            Name = _.Genre.Name,
+                            Subgenres = _.Genre.Subgenres
+                        }
                     });
                 var genres = _genreService.GetAll();
                 var genresVM = genres
-                    .Where(_ => !genres.Any(c => c.Subgenres.Contains(_)))
-                    .Select(_ =>
+                    .Where(g => !genres.Any(c => c.Subgenres.Contains(g)))
+                    .Select(g =>
                     new GenreViewModel()
                     {
-                        Name = _.Name,
-                        Subgenres = _.Subgenres
+                        Id = g.Id,
+                        Name = g.Name,
+                        Subgenres = g.Subgenres
                     });
 
                 ViewBag.Books = booksVM;
@@ -60,7 +66,31 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
                 return RedirectToPage("/Account/Login",new { area = "Identity"});
             }
         }
-        
+
+        [HttpGet]
+        public IActionResult AddBook()
+        {
+            return View("AddBook");
+        }
+
+        [HttpPost]
+        public IActionResult AddBook(BookViewModel model)
+        {
+            var book = new Book()
+            {
+                Title = model.Title,
+                AuthorName = model.AuthorName,
+                Description = model.Description,
+                Genre = _genreService.GetByName(model.Genre.Name)
+            };
+            if(ModelState.IsValid)
+            {
+                _bookService.AddBook(book);
+                return RedirectToAction("Index");
+            }
+            return View("AddBook", model);
+        }
+
         public IActionResult OpenBook(long? id)
         {
             if (!id.HasValue) return Error();
@@ -73,12 +103,36 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
                 Title = book.Title,
                 AuthorName = book.AuthorName,
                 Description = book.Description,
-                GenreName = book.Genre?.Name
+                Genre = new GenreViewModel()
+                {
+                    Id = book.Genre.Id,
+                    Name = book.Genre.Name,
+                    Subgenres = book.Genre.Subgenres
+                }
             };
 
             return View("Book", bookVM);
         }
 
+        public IActionResult OpenGenre(long? id)
+        {
+            if (!id.HasValue) return Error();
+            var genre = _genreService.GetById(id.Value);
+            if (genre == null) return Error();
+
+            var subgenres = genre.Subgenres
+                    .Where(_ => !genre.Subgenres.Any(c => c.Subgenres.Contains(_)))
+                    .Select(_ => _).ToList();
+
+            var genreVM = new GenreViewModel()
+            {
+                Id = genre.Id,
+                Name = genre.Name,
+                Subgenres = genre.Subgenres
+            };
+
+            return View("Genre", genreVM);
+        }
 
         public IActionResult Privacy()
         {

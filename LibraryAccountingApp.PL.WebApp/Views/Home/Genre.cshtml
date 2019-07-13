@@ -27,7 +27,7 @@
                         </tr>
                         <tr>
                             <td><b>Subgenres</b></td>
-                            <td class="d-inline">
+                            <td><div class="d-inline">
                                 @foreach (var item in Model.Subgenres)
                                 {
                                     <a class=""
@@ -35,6 +35,7 @@
                                         @item.Name
                                     </a>
                                 }
+                                </div>
                             </td>
                         </tr>
                     </tbody>

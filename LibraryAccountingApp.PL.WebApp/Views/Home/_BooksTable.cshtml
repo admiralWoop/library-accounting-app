@@ -16,7 +16,11 @@
         {
             <tr>
                 <td scope="row">@Html.DisplayFor(modelItem => item.Title)</td>
-                <td scope="row">@Html.DisplayFor(modelItem => item.GenreName)</td>
+                <td scope="row">
+                    <a asp-area="" asp-controller="Home" asp-action="OpenGenre" asp-route-id="@item.Genre.Id">
+                        @item.Genre.Name
+                    </a>
+                </td>
                 <td scope="row">@Html.DisplayFor(modelItem => item.AuthorName)</td>
                 <td scope="row">@Html.DisplayFor(modelItem => item.Description)</td>
                 <td scope="row" style="white-space:nowrap; width:1%;">

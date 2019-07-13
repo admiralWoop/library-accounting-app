@@ -28,7 +28,11 @@
                     </tr>
                     <tr>
                         <td><b>Genre</b></td>
-                        <td>@Html.DisplayFor(_ => Model.GenreName)</td>
+                        <td>
+                            <a asp-area="" asp-controller="Home" asp-action="OpenGenre" asp-route-id="@Model.Genre.Id">
+                            @Model.Genre.Name
+                            </a>
+                        </td>
                     </tr>
                     <tr>
                         <td><b>Author</b></td>
