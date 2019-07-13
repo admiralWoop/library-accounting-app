@@ -26,8 +26,6 @@ namespace LibraryAccountingApp.PL.WebApp.Models
         [Required(ErrorMessage = "Enter the description")]
         public string Description { get; set; }
 
-        [DisplayName("Genre")]
-        [Required(ErrorMessage = "Enter the genre name")]
-        public string GenreName { get; set; }
+        public GenreViewModel Genre { get; set; }
     }
 }
