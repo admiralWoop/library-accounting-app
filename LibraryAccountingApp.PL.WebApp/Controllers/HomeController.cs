@@ -71,9 +71,12 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("Index", booksVM);
         }
 
+        #region Books
+
         [HttpGet]
         public IActionResult AddBook()
         {
+            ViewBag.Genres = _genreService.GetAll().Select(g => g.Name);
             return View("AddBook");
         }
 
@@ -87,16 +90,82 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
                 Description = model.Description,
                 Genre = _genreService.GetByName(model.Genre.Name)
             };
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 _bookService.AddBook(book);
                 return RedirectToAction("Index");
             }
+
+            ViewBag.Genres = _genreService.GetAll().Select(g => g.Name);
             return View("AddBook", model);
+        }
+
+        [HttpGet]
+        public IActionResult EditBook(long? id)
+        {
+            if (!id.HasValue) return Error();
+            var book = _bookService.GetById(id.Value);
+            if (book == null) return Error();
+
+            var bookVM = new BookViewModel()
+            {
+                Id = book.Id,
+                Title = book.Title,
+                AuthorName = book.AuthorName,
+                Description = book.Description,
+                Genre = new GenreViewModel()
+                {
+                    Id = book.Genre.Id,
+                    Name = book.Genre.Name,
+                    Subgenres = book.Genre.Subgenres
+                }
+            };
+
+            ViewBag.Genres = _genreService.GetAll().Select(g => g.Name);
+
+            return View("EditBook", bookVM);
+        }
+
+        [HttpPost]
+        public IActionResult EditBook(BookViewModel model)
+        {
+            var book = new Book()
+            {
+                Id = model.Id,
+                Title = model.Title,
+                AuthorName = model.AuthorName,
+                Description = model.Description,
+                Genre = _genreService.GetByName(model.Genre.Name)
+            };
+            if (ModelState.IsValid)
+            {
+                _bookService.UpdateBook(book);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Genres = _genreService.GetAll().Select(g => g.Name);
+            return View("EditBook", model);
+        }
+
+        public IActionResult DeleteBook(long? id)
+        {
+            if (!id.HasValue) return Error();
+
+            try
+            {
+                _bookService.DeleteBook(id.Value);
+            }
+            catch
+            {
+                return Error();
+            }
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult OpenBook(long? id)
         {
+
             if (!id.HasValue) return Error();
             var book = _bookService.GetById(id.Value);
             if (book == null) return Error();
@@ -117,6 +186,8 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
 
             return View("Book", bookVM);
         }
+
+        #endregion
 
         public IActionResult OpenGenre(long? id)
         {

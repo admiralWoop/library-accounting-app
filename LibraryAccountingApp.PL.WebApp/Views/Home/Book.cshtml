@@ -11,10 +11,10 @@
         <div class="d-flex flex-row justify-content-between align-items-center">
             <h4 class="">Book</h4>
             <div>
-                <a class="btn btn-info mb-2 text-white">
+                <a class="btn btn-info mb-2 text-white" asp-action="EditBook" asp-route-id="@Model.Id">
                     Edit
                 </a>
-                <a class="btn btn-danger mb-2 text-white">
+                <a class="btn btn-danger mb-2 text-white" asp-action="DeleteBook" asp-route-id="@Model.Id">
                     Delete
                 </a>
             </div>

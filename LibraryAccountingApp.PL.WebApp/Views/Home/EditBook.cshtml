@@ -8,9 +8,9 @@
     </div>
     <div class="col-6">
         <div>
-            <h4>Add new book</h4>
+            <h4>Edit existing book</h4>
         </div>
-        <form asp-action="AddBook">
+        <form asp-action="EditBook">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group row">
                 <label class="col-sm-2 col-form-label">
@@ -45,6 +45,7 @@
                 </label>
                 <div class="col-sm-10">
                     <select asp-for="Genre.Name" class="form-control">
+                        <option>@Model.Genre.Name</option>
                         @foreach (string item in ViewBag.Genres)
                         {
                             <option>@item</option>
@@ -55,7 +56,7 @@
             <div class="form-group row">
                 <div class="col-sm-10">
                     <button class="btn btn-primary" type="submit">
-                        Create
+                        Edit
                     </button>
                 </div>
             </div>

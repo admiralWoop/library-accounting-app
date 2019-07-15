@@ -17,9 +17,12 @@
             <tr>
                 <td scope="row">@Html.DisplayFor(modelItem => item.Title)</td>
                 <td scope="row">
-                    <a asp-area="" asp-controller="Home" asp-action="OpenGenre" asp-route-id="@item.Genre.Id">
-                        @item.Genre.Name
-                    </a>
+                    @if (item.Genre != null)
+                    {
+                        <a asp-area="" asp-controller="Home" asp-action="OpenGenre" asp-route-id="@item.Genre?.Id">
+                            @item.Genre?.Name
+                        </a>
+                    }
                 </td>
                 <td scope="row">@Html.DisplayFor(modelItem => item.AuthorName)</td>
                 <td scope="row">@Html.DisplayFor(modelItem => item.Description)</td>
