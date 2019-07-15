@@ -39,8 +39,9 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
 
             var books = _bookService.GetAll();
             var booksVM = books
-                .Skip((page - 1) * 5)
-                .Take(5)
+                .OrderByDescending(b => b.Title)
+                .Skip((page - 1) * 25)
+                .Take(25)
                 .Select(_ =>
                 new BookViewModel()
                 {
@@ -69,7 +70,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             ViewBag.Books = booksVM;
             ViewBag.Genres = genresVM;
             ViewBag.Page = page;
-            ViewBag.PagesCount = Math.Ceiling((double)books.Count / 5);
+            ViewBag.PagesCount = Math.Ceiling((double)books.Count / 25);
 
             return View("Index", booksVM);
         }
