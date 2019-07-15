@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 using LibraryAccountingApp.BLL.Core;
 using LibraryAccountingApp.Entities;
 using LibraryAccountingApp.PL.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryAccountingApp.PL.WebApp.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
-        private BookService  _bookService;
+        private BookService _bookService;
         private GenreService _genreService;
         private SignInManager<User> _singInManager;
 
@@ -34,6 +36,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
                 page = pageNumber.Value;
             else
                 page = 1;
+
             var books = _bookService.GetAll();
             var booksVM = books
                 .Skip((page - 1) * 5)
@@ -73,6 +76,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
 
         #region Books
 
+        [Authorize(Roles ="Administrator")]
         [HttpGet]
         public IActionResult AddBook()
         {
@@ -80,6 +84,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("AddBook");
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public IActionResult AddBook(BookViewModel model)
         {
@@ -100,6 +105,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("AddBook", model);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult EditBook(long? id)
         {
@@ -126,6 +132,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("EditBook", bookVM);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public IActionResult EditBook(BookViewModel model)
         {
@@ -147,6 +154,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("EditBook", model);
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult DeleteBook(long? id)
         {
             if (!id.HasValue) return Error();
@@ -190,6 +198,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
         #endregion
 
         #region Genres
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult AddGenre()
         {
@@ -197,6 +206,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("AddGenre");
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public IActionResult AddGenre(GenreViewModel model)
         {
@@ -215,6 +225,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("AddGenre", model);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpGet]
         public IActionResult EditGenre(long? id)
         {
@@ -233,6 +244,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("EditGenre", genreVM);
         }
 
+        [Authorize(Roles = "Administrator")]
         [HttpPost]
         public IActionResult EditGenre(GenreViewModel model)
         {
@@ -253,6 +265,7 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             return View("EditGenre", model);
         }
 
+        [Authorize(Roles = "Administrator")]
         public IActionResult DeleteGenre(long? id)
         {
             if (!id.HasValue) return Error();

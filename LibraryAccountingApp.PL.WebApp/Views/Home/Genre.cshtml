@@ -1,15 +1,22 @@
 ﻿@using LibraryAccountingApp.PL.WebApp.Models;
 @model GenreViewModel
-    <div class="row">
-        <div class="col-3 d-flex justify-content-end align-items-start">
-            <a class="btn btn-primary mb-2 text-white" asp-area="" asp-controller="Home" asp-action="Index">
-                Back
-            </a>
-        </div>
-        <div class="col-6">
-            <div class="d-flex flex-row justify-content-between align-items-center">
-                <h4 class="">Genre</h4>
-                <div>
+
+@using Microsoft.AspNetCore.Identity
+@using LibraryAccountingApp.Entities
+@inject UserManager<User> UserManager
+
+<div class="row">
+    <div class="col-3 d-flex justify-content-end align-items-start">
+        <a class="btn btn-primary mb-2 text-white" asp-area="" asp-controller="Home" asp-action="Index">
+            Back
+        </a>
+    </div>
+    <div class="col-6">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <h4 class="">Genre</h4>
+            <div>
+                @if (User.IsInRole("Administrator"))
+                {
                     <a class="btn btn-info mb-2 text-white"
                        asp-action="EditGenre" asp-route-id="@Model.Id">
                         Edit
@@ -18,18 +25,20 @@
                        asp-action="DeleteGenre" asp-route-id="@Model.Id">
                         Delete
                     </a>
-                </div>
+                }
             </div>
-            <div>
-                <table class="table table-bordered">
-                    <tbody>
-                        <tr>
-                            <td><b>Title</b></td>
-                            <td>@Html.DisplayFor(_ => Model.Name)</td>
-                        </tr>
-                        <tr>
-                            <td><b>Subgenres</b></td>
-                            <td><div class="d-inline">
+        </div>
+        <div>
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <td><b>Title</b></td>
+                        <td>@Html.DisplayFor(_ => Model.Name)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Subgenres</b></td>
+                        <td>
+                            <div class="d-inline">
                                 @foreach (var item in Model.Subgenres)
                                 {
                                     <a class=""
@@ -37,11 +46,11 @@
                                         @item.Name
                                     </a>
                                 }
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
