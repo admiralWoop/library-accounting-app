@@ -1,5 +1,6 @@
 ﻿using LibraryAccountingApp.DAL.Contracts;
 using LibraryAccountingApp.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,18 +43,10 @@ namespace LibraryAccountingApp.DAL.EFCore
 
         public Genre Get(long id)
         {
-            var subgenres = GetAll().Where(g => g.Parent?.Id == id).ToList();
-
             return _context.Genres
-                .Where(g => g.Id == id)
-                .Select(_ => new Genre()
-                {
-                    Id = _.Id,
-                    Name = _.Name,
-                    Parent = _.Parent,
-                    Subgenres = subgenres
-                })
-                .FirstOrDefault();
+                .Include(genre => genre.Subgenres)
+                .Include(genre => genre.Parent)
+                .SingleOrDefault(genre => genre.Id == id);
         }
 
         public IEnumerable<Genre> GetAll()
@@ -63,7 +56,8 @@ namespace LibraryAccountingApp.DAL.EFCore
 
         public void Update(Genre item)
         {
-            _context.Genres.Update(item);
+            var genre = Get(item.Id);
+            _context.Entry(genre).CurrentValues.SetValues(item);
         }
     }
 }

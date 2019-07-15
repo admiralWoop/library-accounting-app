@@ -1,5 +1,6 @@
 ﻿using LibraryAccountingApp.DAL.Contracts;
 using LibraryAccountingApp.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,16 +42,8 @@ namespace LibraryAccountingApp.DAL.EFCore
         public Book Get(long id)
         {
             return _context.Books
-                .Where(_ => _.Id == id)
-                .Select(_ => new Book()
-                {
-                    Id = _.Id,
-                    Title = _.Title,
-                    AuthorName = _.AuthorName,
-                    Description = _.Description,
-                    Genre = _.Genre
-                })
-                .FirstOrDefault();
+                .Include(book => book.Genre)
+                .SingleOrDefault(book => book.Id == id);
         }
 
         public IEnumerable<Book> GetAll()
@@ -60,7 +53,8 @@ namespace LibraryAccountingApp.DAL.EFCore
 
         public void Update(Book item)
         {
-            _context.Books.Update(item);
+            var book = Get(item.Id);
+            _context.Entry(book).CurrentValues.SetValues(item);
         }
     }
 }
