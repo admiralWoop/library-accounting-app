@@ -1,10 +1,18 @@
-﻿<div class="row">
+﻿@using Microsoft.AspNetCore.Identity
+@using LibraryAccountingApp.Entities
+@inject UserManager<User> UserManager
+
+
+<div class="row">
     <div class="col-3">
         <div class="d-flex flex-row justify-content-between align-items-center">
             <h4 class="">Genres</h4>
-            <a class="btn btn-primary mb-2 text-white" asp-action="AddGenre">
-                Add new genre
-            </a>
+            @if (User.IsInRole("Administrator"))
+            {
+                <a class="btn btn-primary mb-2 text-white" asp-action="AddGenre">
+                    Add new genre
+                </a>
+            }
         </div>
         <div class="border rounded p-3 mb-3">
             @foreach (var item in ViewBag.Genres)
@@ -16,11 +24,14 @@
     <div class="col-9">
         <div class="d-flex flex-row justify-content-between align-items-center">
             <h4 class="">Books</h4>
-            <a class="btn btn-primary mb-2 text-white" asp-action="AddBook">
-                Add new book
-            </a>
+            @if (User.IsInRole("Administrator"))
+            {
+                <a class="btn btn-primary mb-2 text-white" asp-action="AddBook">
+                    Add new book
+                </a>
+            }
         </div>
-        <partial name="_BooksTable" model="@ViewBag.Books"/>
+        <partial name="_BooksTable" model="@ViewBag.Books" />
         <nav>
             <ul class="pagination justify-content-start">
                 @if (ViewBag.Page > 1)
@@ -38,7 +49,7 @@
                 @if (ViewBag.Page != ViewBag.PagesCount)
                 {
                     <li class="page-item">
-                        <a class="page-link"  asp-action="Index" asp-route-pageNumber="@(ViewBag.Page+1)">Next</a>
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@(ViewBag.Page+1)">Next</a>
                     </li>
                 }
             </ul>
