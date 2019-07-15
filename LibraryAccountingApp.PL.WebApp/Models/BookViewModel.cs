@@ -23,7 +23,6 @@ namespace LibraryAccountingApp.PL.WebApp.Models
         public string AuthorName { get; set; }
 
         [DisplayName("Description")]
-        [Required(ErrorMessage = "Enter the description")]
         public string Description { get; set; }
 
         public GenreViewModel Genre { get; set; }

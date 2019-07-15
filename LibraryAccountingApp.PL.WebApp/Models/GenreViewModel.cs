@@ -14,6 +14,8 @@ namespace LibraryAccountingApp.PL.WebApp.Models
 
         public string Name { get; set; }
 
+        public Genre Parent { get; set; }
+
         public IEnumerable<Genre> Subgenres { get; set; }
     }
 }
