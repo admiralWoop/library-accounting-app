@@ -17,7 +17,7 @@ namespace LibraryAccountingApp.BLL.Core
 
         public Book GetById(long id) => _uof.Books.Get(id);
 
-        public List<Book> GetAll() => _uof.Books.GetAll().ToList();
+        public List<Book> GetAll() =>  _uof.Books.GetAll().ToList();
 
         public List<Book> GetByGenre(Genre genre)
             => _uof.Books.GetAll().Where(book => book.Genre == genre).ToList();

@@ -18,7 +18,7 @@ namespace LibraryAccountingApp.BLL.Core
 
         public Genre GetById(long id) => _uof.Genres.Get(id);
 
-        public Genre GetByName(string name) => 
+        public Genre GetByName(string name) =>
             _uof.Genres.Find(_ => _.Name == name).FirstOrDefault();
 
         public List<Genre> GetAll() => _uof.Genres.GetAll().ToList();
@@ -53,6 +53,14 @@ namespace LibraryAccountingApp.BLL.Core
         {
             if (_uof.Genres.Any(_ => _.Id == id)) //в БД есть жанр с таким Id
             {
+                if(_uof.Books.Find(b => b.Genre?.Id == id).Count() > 0)
+                {
+                    throw new Exception($"Genre cannot be deleted if there are books related to it");
+                }
+
+                foreach (var genre in _uof.Genres.Find(g => g.Parent?.Id == id))
+                    genre.Parent = null;
+
                 _uof.Genres.Delete(id);
                 _uof.Save();
             }
