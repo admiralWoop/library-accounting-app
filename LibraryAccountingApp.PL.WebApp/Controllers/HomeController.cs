@@ -189,6 +189,79 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
 
         #endregion
 
+        #region Genres
+        [HttpGet]
+        public IActionResult AddGenre()
+        {
+            ViewBag.Genres = _genreService.GetAll().Select(g => g.Name);
+            return View("AddGenre");
+        }
+
+        [HttpPost]
+        public IActionResult AddGenre(GenreViewModel model)
+        {
+            var genre = new Genre()
+            {
+                Name = model.Name,
+                Parent = _genreService.GetByName(model.Parent.Name)
+            };
+            if (ModelState.IsValid)
+            {
+                _genreService.AddGenre(genre);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Genres = _genreService.GetAll().Select(g => g.Name);
+            return View("AddGenre", model);
+        }
+
+        [HttpGet]
+        public IActionResult EditGenre(long? id)
+        {
+            if (!id.HasValue) return Error();
+            var genre = _genreService.GetById(id.Value);
+            if (genre == null) return Error();
+
+            var genreVM = new GenreViewModel()
+            {
+                Id = genre.Id,
+                Name = genre.Name,
+                Parent = genre.Parent
+            };
+
+            ViewBag.Genres = _genreService.GetAll().Select(g => g.Name);
+            return View("EditGenre", genreVM);
+        }
+
+        [HttpPost]
+        public IActionResult EditGenre(GenreViewModel model)
+        {
+            
+            if (ModelState.IsValid)
+            {
+                var genre = new Genre()
+                {
+                    Id = model.Id,
+                    Name = model.Name,
+                    Parent = _genreService.GetByName(model.Parent.Name)
+                };
+                _genreService.UpdateGenre(genre);
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.Genres = _genreService.GetAll().Select(g => g.Name);
+            return View("EditGenre", model);
+        }
+
+        public IActionResult DeleteGenre(long? id)
+        {
+            if (!id.HasValue) return Error();
+
+            _genreService.DeleteGenre(id.Value);
+
+            return RedirectToAction("Index");
+        }
+
         public IActionResult OpenGenre(long? id)
         {
             if (!id.HasValue) return Error();
@@ -208,6 +281,8 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
 
             return View("Genre", genreVM);
         }
+
+        #endregion
 
         public IActionResult Privacy()
         {
