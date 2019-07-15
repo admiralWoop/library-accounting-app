@@ -1,0 +1,21 @@
+﻿@using LibraryAccountingApp.PL.WebApp.Models;
+@model GenreViewModel
+@{
+    ViewData["Title"] = "Genre";
+}
+
+<div class="d-block">
+    <a class=""
+        asp-area="" asp-controller="Home" asp-action="OpenGenre" asp-route-id="@Model.Id">
+        @Model.Name
+    </a>
+    @if (Model.Subgenres.Count() > 0)
+    {
+        <ul>
+            @foreach (var item in Model.Subgenres)
+            {
+                <li><partial name="_Genre" model="@(new GenreViewModel() { Id = item.Id, Name = item.Name, Subgenres = item.Subgenres })" /></li>
+            }
+        </ul>
+    }
+</div>

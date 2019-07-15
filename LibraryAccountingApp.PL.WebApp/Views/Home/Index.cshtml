@@ -1,0 +1,47 @@
+﻿<div class="row">
+    <div class="col-3">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <h4 class="">Genres</h4>
+            <a class="btn btn-primary mb-2 text-white" asp-action="AddGenre">
+                Add new genre
+            </a>
+        </div>
+        <div class="border rounded p-3 mb-3">
+            @foreach (var item in ViewBag.Genres)
+            {
+                <partial name="_Genre" model="@item" />
+            }
+        </div>
+    </div>
+    <div class="col-9">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <h4 class="">Books</h4>
+            <a class="btn btn-primary mb-2 text-white" asp-action="AddBook">
+                Add new book
+            </a>
+        </div>
+        <partial name="_BooksTable" model="@ViewBag.Books"/>
+        <nav>
+            <ul class="pagination justify-content-start">
+                @if (ViewBag.Page > 1)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@(ViewBag.Page-1)">Previous</a>
+                    </li>
+                }
+                @for (int i = 1; i <= ViewBag.PagesCount; i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-pageNumber="@i">@i</a>
+                    </li>
+                }
+                @if (ViewBag.Page != ViewBag.PagesCount)
+                {
+                    <li class="page-item">
+                        <a class="page-link"  asp-action="Index" asp-route-pageNumber="@(ViewBag.Page+1)">Next</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
