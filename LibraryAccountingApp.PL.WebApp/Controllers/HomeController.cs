@@ -27,44 +27,48 @@ namespace LibraryAccountingApp.PL.WebApp.Controllers
             _singInManager = singInManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? pageNumber)
         {
-            if(true || _singInManager.IsSignedIn(User))
-            {
-                var books = _bookService.GetAll();
-                var booksVM = books.Select(_ =>
-                    new BookViewModel()
-                    {
-                        Id = _.Id,
-                        Title = _.Title,
-                        AuthorName = _.AuthorName,
-                        Description = _.Description,
-                        Genre = new GenreViewModel()
-                        {
-                            Id = _.Genre.Id,
-                            Name = _.Genre.Name,
-                            Subgenres = _.Genre.Subgenres
-                        }
-                    });
-                var genres = _genreService.GetAll();
-                var genresVM = genres
-                    .Where(g => !genres.Any(c => c.Subgenres.Contains(g)))
-                    .Select(g =>
-                    new GenreViewModel()
-                    {
-                        Id = g.Id,
-                        Name = g.Name,
-                        Subgenres = g.Subgenres
-                    });
-
-                ViewBag.Books = booksVM;
-                ViewBag.Genres = genresVM;
-                return View("Index", booksVM);
-            }
+            int page;
+            if (pageNumber.HasValue)
+                page = pageNumber.Value;
             else
-            {
-                return RedirectToPage("/Account/Login",new { area = "Identity"});
-            }
+                page = 1;
+            var books = _bookService.GetAll();
+            var booksVM = books
+                .Skip((page - 1) * 5)
+                .Take(5)
+                .Select(_ =>
+                new BookViewModel()
+                {
+                    Id = _.Id,
+                    Title = _.Title,
+                    AuthorName = _.AuthorName,
+                    Description = _.Description,
+                    Genre = new GenreViewModel()
+                    {
+                        Id = _.Genre.Id,
+                        Name = _.Genre.Name,
+                        Subgenres = _.Genre.Subgenres
+                    }
+                });
+            var genres = _genreService.GetAll();
+            var genresVM = genres
+                .Where(g => !genres.Any(c => c.Subgenres.Contains(g)))
+                .Select(g =>
+                new GenreViewModel()
+                {
+                    Id = g.Id,
+                    Name = g.Name,
+                    Subgenres = g.Subgenres
+                });
+
+            ViewBag.Books = booksVM;
+            ViewBag.Genres = genresVM;
+            ViewBag.Page = page;
+            ViewBag.PagesCount = Math.Ceiling((double)books.Count / 5);
+
+            return View("Index", booksVM);
         }
 
         [HttpGet]
