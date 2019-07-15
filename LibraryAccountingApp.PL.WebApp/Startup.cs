@@ -51,13 +51,27 @@ namespace LibraryAccountingApp.PL.WebApp
             services.AddScoped<BookService>();
             services.AddScoped<GenreService>();
 
-            services.AddIdentity<User, IdentityRole>()
+            services.AddDefaultIdentity<User>(o => 
+            {
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 4;
+            })
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<LibraryContext>();
-                //.AddDefaultTokenProviders();
+
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Identity/Account/Login";
+                options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+                options.LogoutPath = "/Identity/Account/Logout";
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -79,6 +93,40 @@ namespace LibraryAccountingApp.PL.WebApp
             {
                 routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
+
+            CreateRoles(serviceProvider).Wait();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<User>>();
+
+            foreach(var role in Configuration.GetSection("Roles").GetChildren().ToList())
+            {
+                var roleExists = await RoleManager.RoleExistsAsync(role.Value);
+                if (!roleExists)
+                {
+                    await RoleManager.CreateAsync(new IdentityRole(role.Value));
+                }
+            }
+
+            foreach (var item in Configuration.GetSection("Administrators").GetChildren().ToList())
+            {
+                if(await UserManager.FindByNameAsync(item.Key) == null)
+                {
+                    var admin = new User
+                    {
+                        UserName = item.Key,
+                        Email = item.Key
+                    };
+                    if((await UserManager.CreateAsync(admin, item.Value)).Succeeded)
+                    {
+                        await UserManager.AddToRoleAsync(admin, "Administrator");
+                    }
+                }
+                
+            }
         }
     }
 }
